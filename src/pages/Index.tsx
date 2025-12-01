@@ -404,10 +404,20 @@ export default function Index() {
             </Avatar>
             <h2 className="text-2xl font-bold mb-1">Иван Петров</h2>
             <p className="text-muted-foreground mb-4">Ученик 9-А класса</p>
-            <Button className="w-full gap-2">
-              <Icon name="Settings" size={18} />
-              Настройки
-            </Button>
+            <div className="space-y-2">
+              <Button className="w-full gap-2">
+                <Icon name="Settings" size={18} />
+                Настройки
+              </Button>
+              <Button 
+                variant="destructive" 
+                className="w-full gap-2"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                <Icon name="LogOut" size={18} />
+                Выйти из аккаунта
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -507,10 +517,19 @@ export default function Index() {
             <div className="space-y-3">
               <Button 
                 className="w-full h-12 text-base gap-2" 
-                onClick={() => setIsLoggedIn(true)}
+                onClick={() => navigate('/login')}
               >
-                <Icon name="LogIn" size={20} />
+                <Icon name="GraduationCap" size={20} />
                 Войти как ученик
+              </Button>
+              
+              <Button 
+                variant="secondary" 
+                className="w-full h-12 text-base gap-2"
+                onClick={() => navigate('/login')}
+              >
+                <Icon name="BookOpen" size={20} />
+                Войти как учитель
               </Button>
               
               <Button 
