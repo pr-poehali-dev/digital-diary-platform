@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
+import { useNavigate } from 'react-router-dom';
 
 type Section = 'home' | 'diary' | 'schedule' | 'messages' | 'profile';
 
@@ -50,8 +51,10 @@ interface Message {
 }
 
 export default function Index() {
+  const navigate = useNavigate();
   const [currentSection, setCurrentSection] = useState<Section>('home');
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const notifications: Notification[] = [
     { id: 1, type: 'grade', title: 'Новая оценка', description: 'Математика: 5', time: '10 мин назад', isNew: true },
@@ -479,6 +482,57 @@ export default function Index() {
         return renderHome();
     }
   };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-2xl animate-scale-in">
+          <CardHeader className="text-center space-y-2">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg">
+                Д
+              </div>
+            </div>
+            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Дневник.ру
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="text-center">
+              <p className="text-muted-foreground mb-6">
+                Цифровой школьный дневник для учеников, родителей и учителей
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <Button 
+                className="w-full h-12 text-base gap-2" 
+                onClick={() => setIsLoggedIn(true)}
+              >
+                <Icon name="LogIn" size={20} />
+                Войти как ученик
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="w-full h-12 text-base gap-2"
+                onClick={() => navigate('/register')}
+              >
+                <Icon name="UserPlus" size={20} />
+                Регистрация
+              </Button>
+            </div>
+
+            <div className="pt-4 border-t">
+              <p className="text-sm text-center text-muted-foreground">
+                Для регистрации учителя требуется специальный код доступа
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
