@@ -80,6 +80,10 @@ export default function Register() {
       return;
     }
 
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userType', role);
+    localStorage.setItem('userPhone', formData.phone);
+
     toast({
       title: 'Регистрация успешна!',
       description: `Добро пожаловать, ${formData.firstName}!`,

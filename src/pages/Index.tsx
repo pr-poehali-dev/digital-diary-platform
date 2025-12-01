@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -55,6 +55,18 @@ export default function Index() {
   const [currentSection, setCurrentSection] = useState<Section>('home');
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userPhone');
+    setIsLoggedIn(false);
+  };
 
   const notifications: Notification[] = [
     { id: 1, type: 'grade', title: 'Новая оценка', description: 'Математика: 5', time: '10 мин назад', isNew: true },
@@ -412,7 +424,7 @@ export default function Index() {
               <Button 
                 variant="destructive" 
                 className="w-full gap-2"
-                onClick={() => setIsLoggedIn(false)}
+                onClick={handleLogout}
               >
                 <Icon name="LogOut" size={18} />
                 Выйти из аккаунта

@@ -45,6 +45,10 @@ export default function Login() {
       return;
     }
 
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userType', loginType);
+    localStorage.setItem('userPhone', phone);
+
     toast({
       title: 'Вход выполнен!',
       description: `Добро пожаловать${loginType === 'teacher' ? ', уважаемый учитель' : ''}!`,
